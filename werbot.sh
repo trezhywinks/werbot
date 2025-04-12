@@ -46,7 +46,7 @@ read -p "${PLAY1} "
 
 case $REPLY in
 01 | 1)
-clear;
+##clear;
 start_node;;
 02 | 2)
 Abot;;
@@ -60,7 +60,7 @@ esac
 
 
 start_node(){
-node index.js
+npm run server
 }
 
 banner
