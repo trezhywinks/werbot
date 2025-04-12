@@ -4,7 +4,7 @@ const makeWASocket = require('@whiskeysockets/baileys').default;
 const { useMultiFileAuthState } = require('@whiskeysockets/baileys');
 const QRCode = require('qrcode-terminal');
 
-const prefix = "."; // Definição do prefixo
+const prefix = "."; 
 
 function ban(){
 figlet.text(banner, (err, data) => {
@@ -59,10 +59,6 @@ async function startBot() {
             switch (command) {
                 case "fingmais":
                     await whmer.sendMessage(sender, { text: "Pong!" });
-                    break;
-
-                case "status":
-                    await sendStatus(whmer, sender);
                     break;
 
                 default:
