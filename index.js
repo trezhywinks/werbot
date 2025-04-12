@@ -138,7 +138,7 @@ async function handleMessage(whmer, msg) {
   if (msg.key.fromMe || jid.includes('status')) return;
 
   if (jid.includes('g.us')) {
-    console.log('- Received message from group, ignoring.'.green.bold);
+    console.log('- Received message from group, ignoring.'.magenta.bold);
     return;
   }
 
