@@ -7,7 +7,7 @@ const makeWASocket = require('@whiskeysockets/baileys').default;
 const { useMultiFileAuthState } = require('@whiskeysockets/baileys');
 const QRCode = require('qrcode-terminal');
 const colors = require('colors');
-const prefix = "."; 
+const prefix = "_"; 
 const { serverUp, emitter } = require('./server.js');
 let serverUy = null;
 
@@ -175,15 +175,78 @@ module.exports = { handleMessage };
                     await whmer.sendMessage(sender, { text: "Pong!" });
                     break;
 
-                default:
+           //     default:
                    // await whmer.sendMessage(sender, { text: "Comando não reconhecido." });
-                case "winksmains":
-                if (serverUy){
-               whmer.sendMessage(sender, {text: `My server\n${serverUy}/server`})
-} else {
-whmer.sendMessage(sender, {text: "Erro"})
-}            
-break; 
+            //    case "winksmains":
+              //  if (serverUy){
+               //whmer.sendMessage(sender, {text: `My server\n${serverUy}/server`})
+//} else {
+//whmer.sendMessage(sender, {text: "Erro"})
+//}            
+//break; 
+
+// case generate
+
+case 'winksg': {
+  const quoted = msg.message?.extendedTextMessage?.contextInfo;
+
+  if (!quoted?.quotedMessage) {
+//    await whmer.sendMessage(sender, { text: "❌ Erro" }, { quoted: msg });
+    return;
+  }
+
+  const quotedMsg = quoted.quotedMessage;
+  const quotedType = Object.keys(quotedMsg)[0];
+  const participant = quoted.participant || msg.participant || msg.key.participant;
+  const userId = participant.replace(/@s\.whatsapp\.net/, "");
+  const casename = `user_${userId}`;
+
+
+  const content = JSON.stringify(quotedMsg, null, 2);
+
+  // new case
+  const generatedCase = `
+case '${casename}': {
+  await whmer.relayMessage(jid, {
+    viewOnceMessage: {
+      message: ${content}
+    }
+  }, {});
+}
+break;`;
+
+  await whmer.sendMessage(sender, {
+    text: `\n\n\`\`\`js\n${generatedCase}\n\`\`\``
+  }, { quoted: msg });
+}
+break;
+
+case 'user_': {
+        await whmer.relayMessage(sender, {
+          viewOnceMessage: {
+            message: { 
+        "stickerMessage": {
+          "url": "https://mmg.whatsapp.net/v/t62.15575-24/19158894_680677817752566_8582551217151883096_n.enc?ccb=11-4&oh=01_Q5Aa1QHD83FvFF_4PrACEwLTS4lxt-gKP4iWEW_WghSey4eEhQ&oe=6823D8F7&_nc_sid=5e03e0&mms3=true",                                                                                                                                                                                                     
+          "fileSha256": "KFTlmIuVzcFn4dpAlIpuLSgtDku9NU1wnXT2wcc+g2o=",
+          "fileEncSha256": "syeAnEY4caVfXsnDUSE9+CWyTgpdSv4lIfIgbdXx8t0=",
+          "mediaKey": "TMzjLHqkvBhSvKxMTJ4Hmyr+6vebl2eC21rhbAXzQdk=",
+          "mimetype": "image/webp",
+          "directPath": "/v/t62.15575-24/19158894_680677817752566_8582551217151883096_n.enc?ccb=11-4&oh=01_Q5Aa1QHD83FvFF_4PrACEwLTS4lxt-gKP4iWEW_WghSey4eEhQ&oe=6823D8F7&_nc_sid=5e03e0",                                                                                                                                                                                                                                
+          "fileLength": "63896",
+          "mediaKeyTimestamp": "1744549647",
+          "isAnimated": false,
+          "stickerSentTs": "1744596480900",
+          "isAvatar": false,
+          "isAiSticker": false,
+          "isLottie": false
+        }
+      }
+          }
+        }, {});
+      }
+      break;
+
+//generate
 }
 
 
