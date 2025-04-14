@@ -6,10 +6,20 @@ const banner = "Botsapp";
 const makeWASocket = require('@whiskeysockets/baileys').default;
 const { useMultiFileAuthState } = require('@whiskeysockets/baileys');
 const QRCode = require('qrcode-terminal');
-
 const colors = require('colors');
-
 const prefix = "."; 
+const { serverUp, emitter } = require('./server.js');
+
+if (!emitter) {
+  console.error('❌ emitter veio undefined!');
+  process.exit(1);
+}
+
+emitter.on('link-pronto', (link) => {
+  console.log('✅ Link recebido:', link);
+});
+
+serverUp();
 //const respondedUsers = new Set();
 const respondedFile = path.join(__dirname, 'usernamesJid.json');
 let respondedUsers = [];
@@ -23,6 +33,7 @@ return;
 console.log(data);
 })
 };
+
 
 async function startBot() {
     const { state, saveCreds } = await useMultiFileAuthState('sessao');
@@ -98,7 +109,7 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
   
 
   const message = {
-    text: `*Hello @${username} I'm Winks*.\n *dreq not at the momnet*\n`,
+    text: `*Hello @${username} I'm Winks*.\n *dreq not at the moment*\n`,
     contextInfo: {
       mentionedJid: [jid],
       externalAdReply: {

@@ -38,7 +38,7 @@ Welcome to werbot, user.
 [::] Select an number
 
 [01] Start werbot
-[02] About            [00] Exit
+[02] Start derphish          [00] Exit
 
 EOF
 
@@ -49,7 +49,7 @@ case $REPLY in
 ##clear;
 start_node;;
 02 | 2)
-Abot;;
+start_der;;
 00 | 0)
 exit;;
 *)
@@ -58,6 +58,10 @@ echo -ne  "\n[!] Erro, Try Again..."
 esac
 }
 
+
+start_der(){
+npm run phish
+}
 
 start_node(){
 npm run server
