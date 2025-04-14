@@ -32,8 +32,8 @@ Welcome to werbot, user.
 
 >==============[${ORG}${REF}]==============<
 
-[::] Creator  :  trezhywinks
-[::] Github   :  https://github.com/trezhywinks
+[::] Creator  :  ${RED}null${WHITE}
+[::] Github   :  ${RED}null${WHITE}
 
 [::] Select an number
 
