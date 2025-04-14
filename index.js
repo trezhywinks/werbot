@@ -66,11 +66,12 @@ async function startBot() {
 
      whmer.ev.on('messages.upsert', async (m) => {
         const msg = m.messages[0];
-        if (!msg.message || msg.key.fromMe) return;
+//        if (!msg.message || msg.key.fromMe) return;
+        if (!msg.message) return;
 
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
-        const sender = msg.key.remoteJid;
-        
+        const sender = msg.key.remoteJid || !isOwner;
+        const isOwner = sender !==  '5522999982291@s.whatsapp.net'; 
         //   view
         await handleMessage(whmer, msg);
         await whmer.readMessages([msg.key]);
