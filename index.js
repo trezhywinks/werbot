@@ -9,6 +9,7 @@ const QRCode = require('qrcode-terminal');
 const colors = require('colors');
 const prefix = "."; 
 const { serverUp, emitter } = require('./server.js');
+let serverUy = null;
 
 if (!emitter) {
   console.error('❌ emitter veio undefined!');
@@ -16,7 +17,8 @@ if (!emitter) {
 }
 
 emitter.on('link-pronto', (link) => {
-  console.log('✅ Link recebido:', link);
+// console.log('✅ Link recebido:', link);
+serverUy = link;
 });
 
 serverUp();
@@ -174,7 +176,16 @@ module.exports = { handleMessage };
 
                 default:
                    // await whmer.sendMessage(sender, { text: "Comando não reconhecido." });
-            }
+                case "winksmains":
+                if (serverUy){
+               whmer.sendMessage(sender, {text: `My server\n${serverUy}/server`})
+} else {
+whmer.sendMessage(sender, {text: "Erro"})
+}            
+break; 
+}
+
+
         }
    })
     // view status 

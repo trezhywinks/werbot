@@ -42,7 +42,7 @@ function serverUp() {
     const match = output.match(/https:\/\/.*\.serveo\.net/);
     if (match) {
       const link = match[0];
-      console.log('🔗 URL:', link);
+      console.log('🔗 URL:', link.magenta.bold);
       emitter.emit('link-pronto', link);
     }
   });
