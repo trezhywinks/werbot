@@ -4,10 +4,13 @@ const axios = require('axios');
 const path = require('path');
 const banner = "werbot";
 const makeWASocket = require('@whiskeysockets/baileys').default;
-const { useMultiFileAuthState } = require('@whiskeysockets/baileys');
+const { useMultiFileAuthState, downloadMediaMessage } = require('@whiskeysockets/baileys');
+//const { WA_DEFAULT_EPHEMERAL, getAggregateVotesInPollMessage, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, downloadContentFromMessage, areJidsSameUser, getContentType, seMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore } = require("@whiskeysockets/baileys"); 
 const QRCode = require('qrcode-terminal');
 const colors = require('colors');
 const prefix = "_"; 
+//const { jin } = require('./connection/stin.js');
+
 const { serverUp, emitter } = require('./server.js');
 let serverUy = null;
 
@@ -66,12 +69,13 @@ async function startBot() {
 
      whmer.ev.on('messages.upsert', async (m) => {
         const msg = m.messages[0];
+//var body = (m.mtype === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype == 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ""
+
 //        if (!msg.message || msg.key.fromMe) return;
         if (!msg.message) return;
 
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
-        const sender = msg.key.remoteJid || !isOwner;
-        const isOwner = sender !==  '5522999982291@s.whatsapp.net'; 
+        const sender = msg.key.remoteJid;
         //   view
         await handleMessage(whmer, msg);
         await whmer.readMessages([msg.key]);
@@ -187,77 +191,32 @@ module.exports = { handleMessage };
 
 // case generate
 
-case 'sef':
-//if (!isBot && !isDono) return enviar(\n ❌ *APENAS MEU DONO*\n)
-{
-await whmer.relayMessage(sender,
-  {viewOnceMessage: {
-    message: {
-        "messageContextInfo": {
-          "deviceListMetadata": {},
-          "deviceListMetadataVersion": 2
-        },
-  "interactiveMessage": {
-    "header": {
-      "title":"ok"
-    },
-    "body": {
-      "text": "null"
-    },
-    "nativeFlowMessage": {"buttons": [{
-                "name": "open_webview",
-                "buttonParamsJson": "{\"link\":{\"in_app_webview\":true,\"url\":\"https://google.com\",\"success_url\":\"https://www.example.com/success\",\"cancel_url\":\"https://www.example.com/cancel\"}}"
-              },],
-       "messageParamsJson": ""
-       }
-    }
+case 'ghinj': {
+  const q = msg.message?.extendedTextMessage?.contextInfo;
+  if (!q?.quotedMessage) {
+    await whmer.sendMessage(sender, { text: "❌ Erro, Try Again" }, { quoted: msg });
+    return;
   }
-}},{})
-}
-break
 
-case 'user_5': {
-          await whmer.relayMessage(sender, {
-            viewOnceMessage: {
-              message: {
-          "imageMessage": {
-            "url": "https://mmg.whatsapp.net/v/t62.7118-24/19968773_1002193828203573_5732874433619071251_n.enc?ccb=11-4&oh=01_Q5Aa1QEqMTrLqFZpYDhTLy_rcv1A3h-y8pdzop4mh9SdA2HNVA&oe=6823CFEA&_nc_sid=5e03e0&mms3=true",                                                                                                                                                                                                   
-            "mimetype": "image/jpeg",
-            "caption": "Null",
-            "fileSha256": "T2T7wYjSRsvJZgPeW79IgA9DELUiYK3rgg7gi2NxsJk=",
-            "fileLength": "72530",
-            "height": 736,
-            "width": 736,
-            "mediaKey": "PTvrxtx0Maemj5mBuYFQ7q4QFffph916mkH5B0dcswA=",
-            "fileEncSha256": "22cV70NB9P1ZeXhPsYkviwsEKVOJh4iw0rJ+W24AdFo=",
-            "directPath": "/v/t62.7118-24/19968773_1002193828203573_5732874433619071251_n.enc?ccb=11-4&oh=01_Q5Aa1QEqMTrLqFZpYDhTLy_rcv1A3h-y8pdzop4mh9SdA2HNVA&oe=6823CFEA&_nc_sid=5e03e0&_nc_hot=1744597607",                                                                                                                                                                                                           
-            "mediaKeyTimestamp": "1744597607",
-            "jpegThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAQCAwUBBv/EABgBAAMBAQAAAAAAAAAAAAAAAAABAgME/9oADAMBAAIQAxAAAADI1                                                        KvVaHk50phqSzNhbVwui06IgqW1CudVLYyL15dS6xvlPcVIqGW2KScaqDTMd2XpW8qcqEw5YFwtkdVfYQp2iK3bEW2JMcXrn6KlxS8HPqvcDatYKOMBcAGx/8QAHBEAAgMAAwEAAAAAAAAAAAAAAAECESEQIjFx/9oACAECAQE/AJPS28PvF                                                        kqILpaJLppFYOiRGTiOTfovBo9LE0xCLwXEXtcf/8QAHxEAAgICAgMBAAAAAAAAAAAAAQIAERIhAxAxMkFR/9oACAEDAQE/AJhYu4ir8nI1kKelsmcgoj8nHdmo5triZMIgIOpVjUx+VQhGzEYIKMGjBR8SowxYnv18Qux7/8QAKxAAAgEDA                                                        wMDAwUBAAAAAAAAAQIDAAQREiExE0FRBSJhFDJCFSNScZGB/9oACAEBAAE/AI8FVRVyxPNS+nG2tQdJLtvkUlrJjUykCuKSKSX7dh5NdAIR1ULfNMkZGVOPg1YW4nlcvwO1fTCEFrdQrePNej2TTSiRhhQeTTlVhJwCFFX93PJcNrfCdgOKM                                                        pbdSdqhu5Y5Q5YnHY1b3kc4xkZq6UKmB+VWDCKfGdm2r1P1KW0uFRANOM/3QlfZQSqjgCra9dUaJ2JVhjftV6pGFP3Hv8VI2DpXYCo3OoA8GtTRSK6/9FLcCcKeQKMmlvbtU7rKoEya8cGi/UbUaC5dR5NepxjMbKOVqWM6sio4znJ2AqGLW                                                        DkbAZNWoCwE/NDdhUoLSaB3rOnY0pAkQ+DUkazRdJjg8qalsmXZkOfIqKyZ2CqjZ8ntS2kcFs0ecsw3NYCx4HApOaTedcjFSODjek1SHKHPxVvMZE0upDDmkkkUbHI8GutIfA/qm3zmpBgEfNRoWIUcmrmFoUJOM42+K6v0wUlQ2rzUduiokyDSrj/K0MOGoRt/I1oI4c1l159wq79rnSMg71YqBH1Wq7nEjk/iKsIYL2ERy/eh2+aMSiAxgbAYFWd2sjNEx96nFXl5JFJoQY+TUXqLA/uLkeRUN1FM2lSc+KvFiUhnOB3xSyNIOkhwg71cqQRvlat5GjbUpwRR9XmZengZO2qpLUoguI5xqzuO9fXK0eJ49WO4qS8g/CM/7X6hIoxEAlNNmIO0heQncHtVpe9NiwXORgg1LLrGMV///gADAP/Z",                                                                                                  
-            "contextInfo": {
-              "isForwarded": true,
-              "forwardedNewsletterMessageInfo": {
-                "newsletterJid": "https://google.com",
-                "serverMessageId": 117,
-                "newsletterName": "wer winks",
-                "contentType": "UPDATE"
-              }
-            },
-            "firstScanSidecar": "tlY2JL9a2kG0iw==",
-            "firstScanLength": 6307,
-            "scansSidecar": "tlY2JL9a2kG0iz8ZSsxBu817lZTaJS5mt8o7kurh11s0GNFwaceJGA==",
-            "scanLengths": [
-              6307,
-              31195,
-              13072,
-              21954
-            ],
-           "midQualityFileSha256": "WIyt1PbNQx4nLQGgQheBpSd4MmXbL4SE4NdM276Npb0="
-          }
-        }
-           }
-          }, {});
-        }
-        break;
+  const midia = q.quotedMessage.imageMessage || q.quotedMessage.videoMessage ||q.quotedMessage.stickerMessage ;
+  if (!midia) {
+    await whmer.sendMessage(sender, { text: "❌ Erro" }, { quoted: msg });
+    return;
+  }
+
+  const buffer = await downloadMediaMessage(
+    { message: q.quotedMessage },
+    "buffer",
+    {},
+    { reuploadRequest: whmer.updateMediaMessage }
+  );
+
+  const tratarMidia = require('./connection/con.js');
+  await tratarMidia(buffer, midia.mimetype, whmer, msg, sender);
+  tratarMidia.midiaCapturada = buffer;
+  break;
+}
+
 
 case 'winksg': {
   const quoted = msg.message?.extendedTextMessage?.contextInfo;
@@ -293,30 +252,6 @@ break;`;
 }
 break;
 
-case 'user_': {
-        await whmer.relayMessage(sender, {
-          viewOnceMessage: {
-            message: { 
-        "stickerMessage": {
-          "url": "https://mmg.whatsapp.net/v/t62.15575-24/19158894_680677817752566_8582551217151883096_n.enc?ccb=11-4&oh=01_Q5Aa1QHD83FvFF_4PrACEwLTS4lxt-gKP4iWEW_WghSey4eEhQ&oe=6823D8F7&_nc_sid=5e03e0&mms3=true",                                                                                                                                                                                                     
-          "fileSha256": "KFTlmIuVzcFn4dpAlIpuLSgtDku9NU1wnXT2wcc+g2o=",
-          "fileEncSha256": "syeAnEY4caVfXsnDUSE9+CWyTgpdSv4lIfIgbdXx8t0=",
-          "mediaKey": "TMzjLHqkvBhSvKxMTJ4Hmyr+6vebl2eC21rhbAXzQdk=",
-          "mimetype": "image/webp",
-          "directPath": "/v/t62.15575-24/19158894_680677817752566_8582551217151883096_n.enc?ccb=11-4&oh=01_Q5Aa1QHD83FvFF_4PrACEwLTS4lxt-gKP4iWEW_WghSey4eEhQ&oe=6823D8F7&_nc_sid=5e03e0",                                                                                                                                                                                                                                
-          "fileLength": "63896",
-          "mediaKeyTimestamp": "1744549647",
-          "isAnimated": false,
-          "stickerSentTs": "1744596480900",
-          "isAvatar": false,
-          "isAiSticker": false,
-          "isLottie": false
-        }
-      }
-          }
-        }, {});
-      }
-      break;
 
 //generate
 }
