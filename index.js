@@ -4,30 +4,42 @@ const axios = require('axios');
 const path = require('path');
 const banner = "werbot";
 const makeWASocket = require('@whiskeysockets/baileys').default;
+const { generateWAMessageContent, generateWAMessageFromContent, proto } = require('@whiskeysockets/baileys');
+const { WA_MESSAGE_TYPE, generateWAMessage } = require('@whiskeysockets/baileys');
+//const { generateWAMessageFromContent } = require("@whiskeysockets/baileys");
 const { useMultiFileAuthState, downloadMediaMessage } = require('@whiskeysockets/baileys');
-//const { WA_DEFAULT_EPHEMERAL, getAggregateVotesInPollMessage, generateWAMessageFromContent, proto, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, downloadContentFromMessage, areJidsSameUser, getContentType, seMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore } = require("@whiskeysockets/baileys"); 
 const QRCode = require('qrcode-terminal');
 const colors = require('colors');
 const prefix = "_"; 
-//const { jin } = require('./connection/stin.js');
 
 const { serverUp, emitter } = require('./server.js');
-let serverUy = null;
+let serverUy;
 
+//const respondedUsers = new Set();
+const respondedFile = path.join(__dirname, 'usernamesJid.json');
+let respondedUsers = [];
+
+ 
 if (!emitter) {
   console.error('❌ emitter veio undefined!');
   process.exit(1);
 }
-
-emitter.on('link-pronto', (link) => {
+ 
+emitter.once('link-pronto', (link) => {
 // console.log('✅ Link recebido:', link);
 serverUy = link;
 });
 
-serverUp();
-//const respondedUsers = new Set();
-const respondedFile = path.join(__dirname, 'usernamesJid.json');
-let respondedUsers = [];
+function waitForServerUy() {
+  return new Promise((resolve) => {
+    if (serverUy) return resolve(serverUy);
+    emitter.once('link-pronto', (link) => {
+      serverUy = link;
+      resolve(link);
+    });
+  });
+}
+
 
 function ban(){
 figlet.text(banner, {font: 'Small'}, (err, data) => {
@@ -70,13 +82,14 @@ async function startBot() {
      whmer.ev.on('messages.upsert', async (m) => {
         const msg = m.messages[0];
 //var body = (m.mtype === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype == 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ""
+// if(!msg.message || msg.key.fromMe) return;
 
-//        if (!msg.message || msg.key.fromMe) return;
         if (!msg.message) return;
-
+        const linkserver = await waitForServerUy();
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
         const sender = msg.key.remoteJid;
-        //   view
+        const jid = msg.key?.remoteJid || m.chat || sender;        
+ //   view
         await handleMessage(whmer, msg);
         await whmer.readMessages([msg.key]);
        console.log(msg);
@@ -106,7 +119,7 @@ function sleep(ms) {
 //const audioBuffer = fs.readFileSync('./monde.mp3'); 
 
 async function respondToUser(whmer, msg) {
-  const jid = msg.key.remoteJid;
+ const jid = msg.key.remoteJid;
 const usernameHelo = msg.pushName;
   const username = jid.split("@")[0];
 const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
@@ -180,16 +193,50 @@ module.exports = { handleMessage };
                     break;
 
            //     default:
-                   // await whmer.sendMessage(sender, { text: "Comando não reconhecido." });
-            //    case "winksmains":
-              //  if (serverUy){
-               //whmer.sendMessage(sender, {text: `My server\n${serverUy}/server`})
-//} else {
-//whmer.sendMessage(sender, {text: "Erro"})
-//}            
-//break; 
-
 // case generate
+
+case 'nubnub': {
+  async function image(url) {
+    const { imageMessage } = await generateWAMessageContent({
+      image: { url }
+    }, {
+      upload: whmer.waUploadToServer
+    });
+    return imageMessage;
+  }
+  let msg = generateWAMessageFromContent(m.chat, {
+    interactiveMessage: {
+      body: { text: "[-] Creator" },
+      carouselMessage: {
+        cards: [
+          {
+            header: await image('./img/67f09e72e9e238549038dbd9.png'),
+            body: {
+              text: "*About me*\n\nSee all the data, find out everything about me. Click to learn more.🫧\n"
+            },
+            nativeFlowMessage: {
+              buttons: [
+                {
+                  name: "cta_url",
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "About me",
+                    url: `${linkserver}/server`
+                  })
+                }
+              ]
+            }
+          }
+        ]
+      },
+      messageVersion: 1
+    }
+  }, {});
+
+  await whmer.relayMessage(sender, msg.message, {
+    messageId: msg.key.id
+  });
+  break;
+}
 
 case 'ghinj': {
   const q = msg.message?.extendedTextMessage?.contextInfo;
