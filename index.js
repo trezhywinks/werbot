@@ -212,7 +212,7 @@ case 'nubnub': {
           {
             header: await image('./img/67f09e72e9e238549038dbd9.png'),
             body: {
-              text: "*About me*\n\nSee all the data, find out everything about me. Click to learn more.🫧\n"
+              text: "*About me*\n\nSee all the data, find out everything about me.\n> Click to learn more.🫧\n"
             },
             nativeFlowMessage: {
               buttons: [
@@ -225,9 +225,29 @@ case 'nubnub': {
                 }
               ]
             }
+          },
+       // ]
+      //}
+{
+            header: await image('./img/67f09e72e9e238549038dbd9.png'),
+            body: {
+              text: "*WhatsApp Trasmission*\n\nTrasmission, send a hello to everyone.\n> Click to learn more.🫧\n"
+            },
+            nativeFlowMessage: {
+              buttons: [
+                {
+                  name: "cta_url",
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "WhatsApp Bot",
+                    url: `https://wa.me/dreq?text=Hi%20Love`
+                  })
+                }
+              ]
+            }
           }
         ]
       },
+
       messageVersion: 1
     }
   }, {});
