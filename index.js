@@ -251,6 +251,40 @@ case 'play': {
   break;
 }
 
+case 'reel': {
+  let text = '';
+
+  if (msg.message?.conversation) {
+    text = msg.message.conversation;
+  } else if (msg.message?.extendedTextMessage?.text) {
+    text = msg.message.extendedTextMessage.text;
+  }
+
+  const linky = text.trim().split(' ')[1];
+  if (!linky || !linky.includes('instagram.com/reel')) {
+    await whmer.sendMessage(sender, { text: '*Send a valid link to an Instagram reel.*' }, {quoted: msg});
+    return;
+  }
+
+  const filename = `reel-${Date.now()}.mp4`;
+
+  exec(`yt-dlp -f mp4 -o '${filename}' '${linky}'`, async (err) => {
+    if (err) {
+      console.error(err);
+      await whmer.sendMessage(sender, { text: '❌ Error to Donwload Reel' }, {quoted: msg});
+      return;
+    }
+
+    await whmer.sendMessage(sender, {
+      video: { url: `./${filename}` },
+      caption: '✅ Reel successfully downloaded!'
+    });
+
+    fs.unlinkSync(`./${filename}`);
+  },{quoted: msg});
+
+  break;
+}
 
 
 case 'vid': {
