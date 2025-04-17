@@ -1,4 +1,6 @@
 const figlet = require('figlet');
+const yts = require('yt-search');
+const { exec } = require('child_process');
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
@@ -194,6 +196,120 @@ module.exports = { handleMessage };
 
            //     default:
 // case generate
+
+case 'play': {
+  const textMsg = msg.message?.conversation
+               || msg.message?.extendedTextMessage?.text
+               || '';
+
+  console.log('msg:', textMsg);
+
+  const query = textMsg.trim().split(' ').slice(1).join(' ');
+
+  console.log('query:', query);
+
+  if (!query) {
+    await whmer.sendMessage(sender, { text: 'You need to provide the name of the audio after the command.\nExemple: *_play name*' }, {quoted: msg});
+    break;
+  }
+  await whmer.sendMessage(sender, { text: `Searching for: *${query}*` }, {quoted: msg});
+
+  try {
+    const search = await yts(query);
+    const audio = search.videos[0];
+
+    if (!audio) {
+      await whmer.sendMessage(sender, { text: `Error in the search for ${qrery}` }, {quoted: msg});
+      break;
+    }
+
+    const url = audio.url;
+    const filename = `${audio.videoId}.mp3`;
+
+    await whmer.sendMessage(sender, { text: `Downloading: \n*${audio.title}*\n\nTime: *${audio.timestamp}*` });
+
+    exec(`yt-dlp -x --audio-format mp3 -o '${filename}' '${url}'`, async (err) => {
+      if (err) {
+        console.error(err);
+        await whmer.sendMessage(sender, { text: 'Error ... ' },{quoted: msg});
+        return;
+      }
+
+      try {
+        await whmer.sendMessage(sender, {
+          audio: fs.readFileSync(filename)
+        }, {quoted: msg});
+        fs.unlinkSync(filename); 
+      } catch (e) {
+        await whmer.sendMessage(sender, { text: 'Error to send audio.' }, {quoted: msg});
+      }
+    });
+  } catch (error) {
+    await whmer.sendMessage(sender, { text: 'Erro.' },{quoted: msg});
+  }
+
+  break;
+}
+
+
+
+case 'vid': {
+  const textMsg = msg.message?.conversation
+               || msg.message?.extendedTextMessage?.text
+               || '';
+
+  console.log('msg:', textMsg);
+
+  const query = textMsg.trim().split(' ').slice(1).join(' ');
+
+  console.log('query:', query);
+
+  if (!query) {
+    await whmer.sendMessage(sender, { text: 'ou need to provide the name of the video after the command.\nExemple: *!yt nameo*' }, {quoted, msg});
+    break;
+  }
+
+  //await whmer.sendMessage(sender, { text: `Searching for: *${query}*` }, {quoted, msg});
+
+  try {
+    const search = await yts(query);
+    const video = search.videos[0];
+
+    if (!video) {
+      await whmer.sendMessage(sender, { text: 'Not even a video found.' }, {quated: msg});
+      break;
+    }
+
+    const url = video.url;
+    const filename = `${video.videoId}.mp4`;
+
+    await whmer.sendMessage(sender, {text: ` Downloading: \n*${video.title}*\n\nDuração: *${video.timestamp}*\n` });
+
+    exec(`yt-dlp -f mp4 -o '${filename}' '${url}'`, async (err) => {
+      if (err) {
+        console.error(err);
+        await whmer.sendMessage(sender, { text: 'Error downloading the video' }, {quoted: msg});
+        return;
+      }
+
+      try {
+        await whmer.sendMessage(sender, {
+          video: fs.readFileSync(filename),
+          caption: `✅ Vídeo: *${video.title}*\n\n🔗 ${video.url}`
+        });
+        fs.unlinkSync(filename);
+      } catch (e) {
+        await whmer.sendMessage(sender, { text: 'Error to send vídeo.' }, {quoted: msg});
+      }
+    });
+  } catch (error) {
+    await whmer.sendMessage(sender, { text: 'Error' });
+  }
+
+  break;
+
+}
+
 
 case 'nubnub': {
   async function image(url) {
