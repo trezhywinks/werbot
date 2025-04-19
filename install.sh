@@ -6,6 +6,6 @@ sudo apt install ffmpeg -y
 sudo apt install yt-dlp -y
 sudo npm install .
 chmod +x werbot
-mv werbot /bin/
+sudo cp -r werbot /bin/
 echo -e "[+] Loading Werbot..."
 sudo bash werbot.sh
