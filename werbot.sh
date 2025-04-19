@@ -17,7 +17,7 @@ banner(){
 clear
 cat << EOF
 Welcome to werbot, user.
-
+${RED}
 
  █     █▓█████ ██▀███  ▄▄▄▄   ▒█████ ▄▄▄█████▓
 ▓█░ █ ░█▓█   ▀▓██ ▒ ██▓█████▄▒██▒  ██▓  ██▒ ▓▒
@@ -29,16 +29,16 @@ Welcome to werbot, user.
   ░   ░    ░    ░░   ░ ░    ░░ ░ ░ ▒   ░      
     ░      ░  ░  ░     ░         ░ ░          
                             ░             
-
+${WHITE}
 >==============[${ORG}${REF}]==============<
 
-[::] Creator  :  ${RED}null${WHITE}
-[::] Github   :  ${RED}null${WHITE}
+[::] Author   :  ${RED}werbot - winks${WHITE}
+[::] Github   :  ${RED}https://github.com/trezhywinks/werbot${WHITE}
 
 [::] Select an number
 
-[01] Start werbot
-[02] Start derphish          [00] Exit
+[${RED}01${WHITE}] Start werbot
+[${RED}02${WHITE}] Start derphish          [${RED}00${WHITE}] Exit
 
 EOF
 
