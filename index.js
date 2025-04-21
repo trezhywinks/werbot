@@ -131,7 +131,7 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
   
 
   const message = {
-    text: `*Hello @${username} I'm Moky*.\n *dreq not at the moment*\n`,
+    text: `*Hello @${username} I'm Meggan*.\n *dreq not at the moment*\n`,
     contextInfo: {
       mentionedJid: [jid],
       externalAdReply: {
