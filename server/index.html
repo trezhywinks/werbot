@@ -11,110 +11,347 @@
   ░   ░    ░    ░░   ░ ░    ░░ ░ ░ ▒   ░                                                                                                                                            
     ░      ░  ░  ░     ░         ░ ░                                                                                                                                                
                             ░                                                                                                                                                       
-desc       : Moky  Vers : 1.0
-creator    : ???
+Desc       : hello user 
+Vers       : 1.0 | 2025
+Creator    : dreq
+Author     : Meggan
 -->
-
-<html lang="en-US">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Me</title>
-</head>
-<body>
-<style>
-*{margin:0;padding:0;}
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meggan</title>
+  <style>
+  *{margin: 0; padding: 0;}
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow:hidden;
+      background: black;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 600;
+    }
+    
+    .topm{
+    	background: #0000006B;
+    	display: flex;
+     position: fixed;
+    	top: 0; left: 0; right: 0;
+    	backdrop-filter: blur(2px);
+    	height:10vh;
+    }
+    .mok{
+    	text-align:left;
+    	margin: 10px;
+    	width: 100%;
+    	border-bottom: 1px solid #FFFFFF96;
+    }
+    .logo{margin-left: 20px;}
+    img{border: 3px solid #FFFFFF33;#42445A border-radius: 2px;}
 
-.server{
-width:100%;}
-body{
-background: #000;
-color: #fff;
-font-size: 20px;
+    canvas {display: block;}
+    .bot{position: fixed; left:0; right:0; bottom: 0 ;text-align: center;}
+    .center{
+    	position: fixed;
+    	left: 0;
+    	right: 0;
+    	justify-content: space-around;
+    	text-align: left;
+    	padding: 10px;
+    	display: flex;
+    	background: transparent;
+    }
+    
+    .about{
+    	position: fixed;
+    	top: 15%;
+    	left: 0; right: 0; justify-content: space-around;
+    	text-align: center;
+       display: none;
+    }
+.desktop{
+position: fixed;
+top: 40%;
 text-align: center;
-font-family: Arial;
-font-weight: 600;
-display: none;
+left: 0;
+right:0;
+display: inline;
 }
 
 @media(max-width: 999px){
-body{
+.desktop{
+display: none;}
+.about{
 display: inline;
+}}
+
+    .den{
+    	margin-left: 30px;
+    }
+    .button{
+    	width: 150px;
+    	font-size: 17px;
+    	border-radius: 3px;
+    	border: 1px solid rgba(255, 255, 255, 0.29);
+    	background: #00000021;
+    	padding: 7px;
+    	margin: 10px;
+    	backdrop-filter: blur(3px);
+    	color:rgba(255, 255, 255, 0.29);
+    }
+    .vid{
+    	position: fixed;
+    	top: 40%;
+    	left: 0;
+    	right: -350%;
+    }
+    .centi{
+    	display: flex;
+    	width:100%;
+    }
+    video{
+    	width:90%;
+    	height:40vh;
+    }
+    #button2{
+    	color:;
+    }
+    .sid{
+    	width:80px;
+    	border-radius: 100px;
+    	animation: --hanime 2s linear infinite;
+    	transition: 0.5s;
+    	margin: 10px;
+    }
+    
+    @keyframes --hanime{
+    	0%{ width:90px; transition: 0.5s;}
+    	30%{width: 85px; transition: 0.5s;}
+    	50%{width: 80px; transition:0.5s}
+    	80%{width: 85px; transition:0.5s}
+    	100%{width: 90px; transition:0.5s}
+    }
+    .maki{
+    	padding: 10px;
+    	overflow: hidden;
+    }
+    .text{
+    	position: fixed;
+    	top: 57%;
+    	left: 0;
+    	right: 0;
+    	display: none;
+    	animation: -viw 4s ease-in-out;
+    	transition: 0.5s;
+    }
+    @keyframes -viw{
+    	from{opacity: 0;}
+    	to{opacity: 0.6;}
+    }
+    .d{
+    	opacity: 0.3;
+    }
+    
+    .bouts{
+    	
+    }
+
+
+  </style>
+</head>
+<body class="server"> 
+	<div class="topm">
+		<div class="logo">
+			<img src="https://trezhy.onrender.com/imagens/6806c9db9a0b817481eefb08.png" width="80"/>
+		</div>
+		<div class="mok">
+			<h3>Meggan</h3>
+			<p style="font-size: 14px; opacity: 0.3;">Created by: dreq</p>
+		</div>
+	</div>
+	<div class="about">
+		<div class="bouts">
+		<button class="button" id="button2" onclick="clickmeA();">About me</button>	
+		<button class="button" id="button" onclick="clickme();">Accounts</button>
+		</div><br>
+	<div class="center">
+		<div class="creator">
+			<span>Author</span><br>
+			<span>Description</span><br>
+			<span>Version</span><br>
+			<span>Telegram</span><br>
+		</div>
+		<div class="den">
+			<span class="d">: Meggan</span><br>
+			<span class="d" id="er">: Hello World</span><br>
+			<span class="d">: 1.0 | 2025</span><br>
+			<script>
+			const mig = document.getElementById('er');
+				const ser = [ ': Welcome', ': Welcome User!', ': RKS' ];
+				const main = Math.floor(Math.random() * ser.length)
+				mig.innerText = ser[main];
+			</script>
+			<span class="d">: t.me</span><br>			
+		</div>
+	</div>
+					<div class="vid">
+						<div class="maki">
+				<img src="https://trezhy.onrender.com/imagens/6806ca279a0b817481eefb0e.png" width="90" class="sid" onclick="clickmeA();"/>
+				</div><br><br><br>
+				<div class="text" id="text">
+					<span>WELCOME!</span>
+				</div>
+				</div>
+
+	</div>
+
+                                  <div class="desktop">
+                                   <div class="maki">
+                                <img src="https://trezhy.onrender.com/imagens/6806ca279a0b817481eefb0e.png" width="90" style="border-radius: 100px;"/>
+                                </div><br><br><br>
+                                <div class="tinhg">
+                                        <span>WELCOME!</span>
+                                </div>
+                                </div>
+	  	<script>
+	  	function clickme(){
+	  		const viw = document.querySelector('.text');
+  				const center = document.querySelector('.center');
+  				const vid = document.querySelector('.vid');
+  				const but = document.getElementById('button');
+  				const but1 = document.getElementById('button2');
+  				center.style.left = '-450%';
+  				center.style.transition = '0.5s';
+  				vid.style.right = '0';
+  				vid.style.transition = '0.5s'
+  				but.style.color = '';
+  		but1.style.color = 'rgba(255, 255, 255, 0.29)';
+  		viw.style.display = 'inline';
+  		viw.style.left = '0';
+  		setTimeout( boc, 100)}
+  				
+  				function boc(){
+  					const hi = document.querySelector('.topm');
+  					hi.style.top = '-40%';
+  					hi.style.transition = '0.5s';
+  					buts();
+  				}
+  				
+  				function buts(){
+  					const bouts = document.querySelector('.bouts');
+  					bouts.style.position = 'fixed';
+  					bouts.style.top = '-40%';
+  					//bouts.style.left = '0';
+  					//bouts.style.right = '0';
+  					//bogy();
+  				}
+  				
+  				  				function bocs() {
+  					const hiu = document.querySelector('.topm');
+  					hiu.style.top = '0';
+  					hiu.style.transition = '0.5s';
+  					butstre();
+  				}
+  				
+  				
+  				function butstre(){
+  					const boutshe = document.querySelector('.bouts');
+  					boutshe.style.position = 'relative';
+  					boutshe.style.top = '0';
+  				}
+  	function bogy() {
+  document.querySelector('.sid').addEventListener('click', () => {
+    const sert = document.querySelector('.bouts');
+    const position = window.getComputedStyle(sert).position;
+    
+    if (position === 'fixed') {
+      butstre();
+    } else {
+      buts();
+    }
+  });
 }
+
+  				
+  				
+  				function clickmeA() {
+	const center = document.querySelector('.center');
+	const virwe = document.querySelector('.text');
+	const vid = document.querySelector('.vid');
+	const but5 = document.getElementById('button2');
+	const but4 = document.getElementById('button');
+	center.style.left = '0';
+	center.style.transition = '0.5s';
+	vid.style.right = '-350%';
+	vid.style.transition = '0.5s';
+but5.style.color = '';	
+	but4.style.color = 'rgba(255, 255, 255, 0.29)';
+	virwe.style.left = '-470%';
+//virwe.style.display = 'none';
+bocs();
 }
 
-img{
-width: 100%;
-}
+<!--/div-->
+  	</script>
+<center>
+	<div class="bot">
+	<span style="font-size: 13px;opacity: 0.3;">Meggan can make some mistakes, it wouldn't be very funny if some mistakes didn't exist, right?</span>
+	</div>
+</center>  
+<canvas id="starCanvas"></canvas>
+  <script>
+    const canvas = document.getElementById("starCanvas");
+    const ctx = canvas.getContext("2d");
 
-a{
-text-decoration: none;
-color: #fff;
-}
-button{
-padding: 8px 50px;
-border-radius: 20px;
-background: green;
-color: #fff;
-font-size: 20px;
-font-weight: 600;
-font-family: Arial;
-border: none;
-}
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-p{
-font-size: 15px;
-opacity: 0.6;
-font-weight: 600;
-}
+    const stars = [];
+    const numStars = 120;
 
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 0.9,
+        speed: Math.random() * 1.5 + 0.5
+      });
+    }
 
-.sert{
-width: 100%;
-display: flex;
-margin: 20px;
-text-align: left;}
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
 
-.span{
-width: 100%;}
-</style>
-<div class="server">
-<img src="https://trezhy.onrender.com/imagens/67f45a9d4524b03130a7e3c6.png" title="hello"/>
-</div>
-<div class="dow">
-<h2>Moky Ver: 1.0</h2>
-<div class="sert">
-<div class="h7">
-<h6>Creator</h6>
-<h6>Description</h6>
-<h6>Author</h6>
-<h6>Host</h6>
-</div>
-<div class="span">
-<h6 style="margin-left: 10%">: Winks</h6>
-<h6 style="margin-left: 10%">: console.log("Hello World")</h6>
-<h6 style="margin-left: 10%">: (winks)</h6>
-<h6 style="margin-left: 10%">: localhost</h6>
-</div>
-<br>
-<br>
-</div>
-<p id="hiu" class="hui"></p>
-</div>
-<img src="https://media.tenor.com/oGdwFujCzNUAAAAM/blue-archive.gif" style="width: 120px; margin: 20px;"/>
-<script>
-const p = document.querySelector('.hui');
-const rein = ['Hello user', 'Welcome user!', 'Hello user! I'm Moky']
-"const main = Math.floor(Math.random()* rein.length);
-console.log(`[+] Hey! console => `, rein[main]);
+    function updateStars() {
+      stars.forEach(star => {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = -star.radius;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+    }
 
-if(p){
-p.innerText = rein[main];
-} else{
-console.log("Erro.")
-}
-</script>
+    function animate() {
+      drawStars();
+      updateStars();
+      requestAnimationFrame(animate);
+    }
 
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
 </body>
 </html>
-
