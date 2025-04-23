@@ -93,6 +93,19 @@ async function startBot() {
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
 
+
+
+const Texto = {
+  key: {
+    fromMe: false,
+    remoteJid: '120363021234567890@g.us', // ou JID do usuário
+    id: 'MSGID1234567890'
+  },
+  message: {
+    conversation: '💬 *test*'
+  }
+};
+
  //   view
         await handleMessage(whmer, msg);
         await whmer.readMessages([msg.key]);
@@ -238,7 +251,8 @@ const helu = `*Welcome to commands*
 
 console.log(helu);
 
-  await whmer.relayMessage(jid, {
+ // await whmer.relayMessage(jid, {
+const Main = {
     viewOnceMessage: {
       message: {
         imageMessage: {
@@ -277,10 +291,16 @@ console.log(helu);
         }
       }
     }
-  }, {quoted: msg});
+//  },
+// {});
 }
+await whmer.relayMessage(jid, Main, {quoted: Texto})
+};
 break;
 
+case "mik":
+whmer.sendMessage(jid, {text: "hello"}, {quoted: Texto})
+break
 
 
 case 'play': {
