@@ -28,7 +28,6 @@ if (!emitter) {
 }
  
 emitter.once('link-pronto', (link) => {
-// console.log('✅ Link recebido:', link);
 serverUy = link;
 });
 
@@ -91,6 +90,9 @@ async function startBot() {
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text || '';
         const sender = msg.key.remoteJid;
         const jid = msg.key?.remoteJid || m.chat || sender;        
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
+
  //   view
         await handleMessage(whmer, msg);
         await whmer.readMessages([msg.key]);
@@ -133,6 +135,8 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
   const message = {
     text: `*Hello @${username} I'm Meggan*.\n *dreq not at the moment*\n`,
     contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
       mentionedJid: [jid],
       externalAdReply: {
         mediaType: 1,
@@ -144,6 +148,7 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
       }
     }
   };
+
 
   const extraMessage = {
     text: "you have reached the limit, I can't reply to many messages.\n\n\ntype (.main) to see the free commands",
@@ -157,7 +162,27 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
   };
 
 
-  await whmer.sendMessage(jid, message, { quoted: msg });
+const sentMsg = await whmer.sendMessage(jid, message, { quoted: msg });
+ await delay(2000);
+
+    await whmer.relayMessage(jid, {
+      protocolMessage: {
+        key: {
+          remoteJid: jid,
+          id: sentMsg.key.id,
+          fromMe: true
+        },
+        type: 14,  // Tipo 14 para mensagem editada
+        editedMessage: {
+          conversation: "*Hello @${username} I'm Meggan*.\n *dreq not at the moment*\n" 
+        }
+      }
+    }, {});
+
+//  } catch (error) {
+  //  console.error("Erro ao editar a mensagem:", error);
+ // }
+
   await sleep(3000);
  // await whmer.sendMessage(jid, extraMessage);
   await whmer.sendMessage(jid, reaction);
@@ -250,6 +275,50 @@ case 'play': {
 
   break;
 }
+
+case 'editmsg': {
+  try {
+    const mess = {
+      text: `*Hello user I'm Meggan*.\n *dreq not at the moment*\n`,
+      contextInfo: {
+        forwardingScore: 999999999,
+        isForwarded: true,
+        mentionedJid: [jid],
+        externalAdReply: {
+          mediaType: 1,
+          title: `Hello`,
+          body: "respond quickly.",
+          thumbnail: onion,
+          previewType: "IMAGE",
+          sourceUrl: "",
+        }
+      }
+    };
+
+    const sentMsgg = await whmer.sendMessage(jid, mess);
+
+    await delay(2000);
+
+    await whmer.relayMessage(jid, {
+      protocolMessage: {
+        key: {
+          remoteJid: jid,
+          id: sentMsgg.key.id,
+          fromMe: true
+        },
+        type: 14,
+        editedMessage: {
+          conversation: `*Hello user I'm Meggan*.\n *dreq not at the moment*\n`  // Mensagem editada
+        }
+      }
+    }, {});
+
+  } catch (error) {
+    console.error("Erro ao editar a mensagem:", error);
+  }
+  break;
+}
+
 
 case 'reel': {
   let text = '';
