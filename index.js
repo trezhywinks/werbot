@@ -222,59 +222,29 @@ module.exports = { handleMessage };
            //     default:
 // case generate
 
-case 'mi': {
-  await whmer.relayMessage(
-    jid,
-    {
-      viewOnceMessage: {
-        message: {
-          imageMessage: {
-            url: "https://mmg.whatsapp.net/v/t62.7118-24/22536979_1575879089727195_742499509855969758_n.enc?ccb=11-4&oh=01_Q5Aa1QEqRybBprh_fSm3z-KxKDyiAEZePq90iIDUj9_tzY1Jzg&oe=68306F0B&_nc_sid=5e03e0&mms3=true",
-            mimetype: "image/jpeg",
-            caption: "Hello user",
-            fileSha256: "EfL4ZHvCdHw9Kt/qg9HSrgTYyB3s+IazbbOAXQPQuSk=",
-            fileLength: "196212",
-            height: 701,
-            width: 1280,
-            mediaKey: "iAO79DJ3fm69Z7B8wkQaSN/S3ByCljlNW/JblmyaYZY=",
-            fileEncSha256: "1LrgjC8I2VwABVL/dvH+hQ2TRww9fl6UITO032/vZXE=",
-            directPath: "/v/t62.7118-24/22536979_1575879089727195_742499509855969758_n.enc?ccb=11-4&oh=01_Q5Aa1QEqRybBprh_fSm3z-KxKDyiAEZePq90iIDUj9_tzY1Jzg&oe=68306F0B&_nc_sid=5e03e0&_nc_hot=1745421120",
-            mediaKeyTimestamp: "1745419876",
-            jpegThumbnail: "/9j/4AAQSkZJRgABAQAAAQABAAD/...",
-            contextInfo: {
-              isForwarded: true,
-              forwardedNewsletterMessageInfo: {
-                newsletterJid: "120363321854866918@newsletter",
-                serverMessageId: 118,
-                newsletterName: "Moky Hatsune",
-                contentType: "UPDATE"
-              }
-            },
-            firstScanSidecar: "GSxvJlgw8lZShg==",
-            firstScanLength: 10325,
-            scansSidecar: "GSxvJlgw8lZShoFUnY6ukdqgMNm0O3N39ALU+boIpPV15WOZF+ZoLA==",
-            scanLengths: [10325, 81909, 40117, 63859],
-            midQualityFileSha256: "hfwXmA4flASAC8zqjZnkYE3FbTgAy7i2AfDxtkDSJXY="
-          }
-        }
-      }
-    },
-    {
-      quoted: msg
-    }
-  );
-  break;
-}
+case "main": {
+const helu = `*Welcome to commands* 
 
+🌬 *main*         
+└─ Commands              
+> $ _vid                
+> $ _play               
+> $ _reel               
+> $ _ghinj              
 
-case 'main': {
+🌬 *about*       
+└─ meggan created by dreq
+`;
+
+console.log(helu);
+
   await whmer.relayMessage(jid, {
     viewOnceMessage: {
       message: {
         imageMessage: {
           url: "https://mmg.whatsapp.net/v/t62.7118-24/22536979_1575879089727195_742499509855969758_n.enc?ccb=11-4&oh=01_Q5Aa1QEqRybBprh_fSm3z-KxKDyiAEZePq90iIDUj9_tzY1Jzg&oe=68306F0B&_nc_sid=5e03e0&mms3=true",
           mimetype: "image/jpeg",
-          caption: "Hello user",
+          caption: helu,
           fileSha256: "EfL4ZHvCdHw9Kt/qg9HSrgTYyB3s+IazbbOAXQPQuSk=",
           fileLength: "196212",
           height: 701,
