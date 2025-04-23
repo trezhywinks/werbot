@@ -6,17 +6,16 @@ REF="$(printf ' \e[1;37m\n')"
 
 PWD=`command pwd`
 
-printf " \e[1;37m Welcome user\n"
+printf " \e[1;37m Helo user\n"
 
 
-PLAY1="${WHITE}┌──(${RED}werscript${WHITE})-[~${PWD}]
-└─${RED}>${WHITE}"
+##PLAY1="${WHITE}┌──(${RED}werscript${WHITE})-[~${PWD}]
+##└─${RED}>${WHITE}"
 
 
 banner(){
-clear
 cat << EOF
-Welcome to werbot, user.
+Welcome to werbot.
 ${RED}
 
  █     █▓█████ ██▀███  ▄▄▄▄   ▒█████ ▄▄▄█████▓
@@ -35,27 +34,12 @@ ${WHITE}
 [::] Author   :  ${RED}werbot - winks${WHITE}
 [::] Github   :  ${RED}https://github.com/trezhywinks/werbot${WHITE}
 
-[::] Select an number
+[::] Try an command
 
-[${RED}01${WHITE}] Start werbot
-[${RED}02${WHITE}] Start derphish          [${RED}00${WHITE}] Exit
+[${RED}01${WHITE}] Start werbot             werbot --server
+[${RED}02${WHITE}] Start derphish           werbot --phish
 
 EOF
-
-read -p "${PLAY1} " 
-
-case $REPLY in
-01 | 1)
-##clear;
-start_node;;
-02 | 2)
-start_der;;
-00 | 0)
-exit;;
-*)
-echo -ne  "\n[!] Erro, Try Again..."
-{ sleep 0.75; clear; banner; }
-esac
 }
 
 
