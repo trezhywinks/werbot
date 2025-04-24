@@ -4,6 +4,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
+const sharp = require('sharp');
 const banner = "werbot";
 const makeWASocket = require('@whiskeysockets/baileys').default;
 const { generateWAMessageContent, generateWAMessageFromContent, proto } = require('@whiskeysockets/baileys');
@@ -302,6 +303,48 @@ case "mik":
 whmer.sendMessage(jid, {text: "hello"}, {quoted: Texto})
 break
 
+
+case "migattp":
+  const textMsg = msg.message?.conversation
+               || msg.message?.extendedTextMessage?.text
+               || '';
+
+  console.log('msg:', textMsg);
+
+  const query = textMsg.trim().split(' ').slice(1).join(' ');
+
+  console.log('query:', query);
+
+  if (!query) {
+    await whmer.sendMessage(sender, { text: '\nExemple: *_migattp Hello World*' }, {quoted: msg});
+    break;
+  }
+    try {
+        await whmer.sendMessage(jid, {text: "Loading.."}, {quoted: msg});
+        const stickerUrl = `https://figattp.onrender.com/?api=${query}`;
+
+        const response = await axios.get(stickerUrl, { responseType: 'arraybuffer' });
+        const originalBuffer = Buffer.from(response.data, 'binary');
+
+        const fixedSticker = await sharp(originalBuffer)
+            .flatten({ background: '#ffffff' }) 
+            .resize(512, 512, {
+                fit: 'contain',
+                background: '#ffffff'
+            })
+            .webp()
+            .toBuffer();
+
+        await whmer.sendMessage(jid, {
+            sticker: fixedSticker,
+            mimetype: 'image/webp'
+        },{quoted: msg});
+
+    } catch (error) {
+        console.error("Erro to processing sticker:", error);
+        await whmer.sendMessage(jid, { text: "Erro to processing sticker 😢" });
+    }
+    break;
 
 case 'play': {
   const textMsg = msg.message?.conversation
