@@ -93,8 +93,7 @@ async function startBot() {
         const jid = msg.key?.remoteJid || m.chat || sender;        
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
-
-
+        const share = fs.readFileSync('./img/680a620c67403a84ce7bd102.png');
 
 const Texto = {
   key: {
@@ -361,7 +360,26 @@ case 'play': {
     await whmer.sendMessage(sender, { text: 'You need to provide the name of the audio after the command.\nExemple: *_play name*' }, {quoted: msg});
     break;
   }
-  await whmer.sendMessage(sender, { text: `Searching for: *${query}*` }, {quoted: msg});
+  const mgr = {
+    text: `*Searching for: ${query}*`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Searching...`,
+        body: "respond quickly.",
+        thumbnail: share,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+await whmer.sendMessage(sender, mgr, {quoted: msg})
+
+//  await whmer.sendMessage(sender, { text: `Searching for: *${query}*` }, {quoted: msg});
 
   try {
     const search = await yts(query);
@@ -375,7 +393,25 @@ case 'play': {
     const url = audio.url;
     const filename = `${audio.videoId}.mp3`;
 
-    await whmer.sendMessage(sender, { text: `Downloading: \n*${audio.title}*\n\nTime: *${audio.timestamp}*` });
+  const mgf = {
+    text: `*Downloading:* \n*${audio.title}*\n\nTime: *${audio.timestamp}*`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Downloading...`,
+        body: "respond quickly.",
+        thumbnail: share,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+await whmer.sendMessage(sender, mgf, {quoted: msg})
+//    await whmer.sendMessage(sender, { text: `Downloading: \n*${audio.title}*\n\nTime: *${audio.timestamp}*` }, {quoted: msg});
 
     exec(`yt-dlp -x --audio-format mp3 -o '${filename}' '${url}'`, async (err) => {
       if (err) {
@@ -510,7 +546,7 @@ case 'vid': {
     const url = video.url;
     const filename = `${video.videoId}.mp4`;
 
-    await whmer.sendMessage(sender, {text: ` Downloading: \n*${video.title}*\n\nDuração: *${video.timestamp}*\n` });
+    await whmer.sendMessage(sender, {text: ` Downloading: \n*${video.title}*\n\nDuração: *${video.timestamp}*\n` }, {quoted: msg});
 
     exec(`yt-dlp -f mp4 -o '${filename}' '${url}'`, async (err) => {
       if (err) {
@@ -520,10 +556,31 @@ case 'vid': {
       }
 
       try {
-        await whmer.sendMessage(sender, {
+
+  const virt = {
           video: fs.readFileSync(filename),
-          caption: `✅ Vídeo: *${video.title}*\n\n🔗 ${video.url}`
-        });
+          caption: `✅ Vídeo: *${video.title}*\n\n🔗 ${video.url}`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Video`,
+        body: "respond quickly.",
+        thumbnail: share,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }  
+  }; 
+
+await whmer.sendMessage(sender, virt, {quoted: msg})
+
+        //await whmer.sendMessage(sender, {
+         // video: fs.readFileSync(filename),
+          //caption: `✅ Vídeo: *${video.title}*\n\n🔗 ${video.url}`
+        //});
         fs.unlinkSync(filename);
       } catch (e) {
         await whmer.sendMessage(sender, { text: 'Error to send vídeo.' }, {quoted: msg});
