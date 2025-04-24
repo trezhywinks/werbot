@@ -94,6 +94,8 @@ async function startBot() {
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
         const share = fs.readFileSync('./img/680a620c67403a84ce7bd102.png');
+        const hats  = fs.readFileSync('./img/hatusune.png');
+        const dim   = fs.readFileSync('./img/Hatsune-Miku-PNG-File.png')
 
 const Texto = {
   key: {
@@ -242,8 +244,8 @@ const helu = `*Welcome to commands*
 └─ Commands              
 > $ _vid                
 > $ _play               
-> $ _reel               
-> $ _ghinj  $ _migattp            
+> $ _reel    $ _nubnub            
+> $ _ghinj   $ _migattp            
 
 🌬 *about*       
 └─ meggan created by dreq
@@ -377,7 +379,7 @@ case 'play': {
     }
   };
 
-await whmer.sendMessage(sender, mgr, {quoted: msg})
+//await whmer.sendMessage(sender, mgr, {quoted: msg})
 
 //  await whmer.sendMessage(sender, { text: `Searching for: *${query}*` }, {quoted: msg});
 
@@ -421,13 +423,34 @@ await whmer.sendMessage(sender, mgf, {quoted: msg})
       }
 
       try {
-        await whmer.sendMessage(sender, {
-          audio: fs.readFileSync(filename)
-        }, {quoted: msg});
-        fs.unlinkSync(filename); 
+
+  const mga = {
+ audio: fs.readFileSync(filename),
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `${audio.title}`,
+        body: "respond quickly.",
+        thumbnail: hats,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+await whmer.sendMessage(sender, mga, {quoted: msg})
+
+    //    await whmer.sendMessage(sender, {
+  //        audio: fs.readFileSync(filename)
+      //  }, {quoted: msg});
+//        fs.unlinkSync(filename); 
       } catch (e) {
         await whmer.sendMessage(sender, { text: 'Error to send audio.' }, {quoted: msg});
       }
+udio: fs.readFileSync(filename)
     });
   } catch (error) {
     await whmer.sendMessage(sender, { text: 'Erro.' },{quoted: msg});
@@ -504,17 +527,35 @@ case 'reel': {
       return;
     }
 
-    await whmer.sendMessage(sender, {
+
+    const dom = {  
       video: { url: `./${filename}` },
-      caption: '✅ Reel successfully downloaded!'
-    });
+      caption: '*Reel successfully downloaded!*',
+       contextInfo: {
+        forwardingScore: 999999999,
+        isForwarded: true,
+        mentionedJid: [jid],
+        externalAdReply: {
+          mediaType: 1,
+          title: `Your Reel`,
+          body: "respond quickly.",
+          thumbnail: dim,
+          previewType: "IMAGE",
+          sourceUrl: "",
+        }
+      }
+    };
+await whmer.sendMessage(sender, dom, {quoted: msg});
+   // await whmer.sendMessage(sender, {
+     // video: { url: `./${filename}` },
+     // caption: '✅ Reel successfully downloaded!'
+   // });
 
     fs.unlinkSync(`./${filename}`);
   },{quoted: msg});
 
   break;
 }
-
 
 case 'vid': {
   const textMsg = msg.message?.conversation
@@ -546,7 +587,27 @@ case 'vid': {
     const url = video.url;
     const filename = `${video.videoId}.mp4`;
 
-    await whmer.sendMessage(sender, {text: ` Downloading: \n*${video.title}*\n\nDuração: *${video.timestamp}*\n` }, {quoted: msg});
+  const mgww = {
+    text: `*Downloading: ${video.title}*\n\nTime: *${video.timestamp}*`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Downloading...`,
+        body: "respond quickly.",
+        thumbnail: share,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+await whmer.sendMessage(sender, mgww, {quoted: msg})
+
+
+//    await whmer.sendMessage(sender, {text: ` Downloading: \n*${video.title}*\n\nDuração: *${video.timestamp}*\n` }, {quoted: msg});
 
     exec(`yt-dlp -f mp4 -o '${filename}' '${url}'`, async (err) => {
       if (err) {
@@ -559,16 +620,16 @@ case 'vid': {
 
   const virt = {
           video: fs.readFileSync(filename),
-          caption: `✅ Vídeo: *${video.title}*\n\n🔗 ${video.url}`,
+          caption: `*title: ${video.title}*\n\n ${video.url}`,
     contextInfo: {
       forwardingScore: 999999999,
       isForwarded: true,
       mentionedJid: [jid],
       externalAdReply: {
         mediaType: 1,
-        title: `Video`,
+        title: `${video.title}`,
         body: "respond quickly.",
-        thumbnail: share,
+        thumbnail: hats,
         previewType: "IMAGE",
         sourceUrl: "",
       }
@@ -581,13 +642,13 @@ await whmer.sendMessage(sender, virt, {quoted: msg})
          // video: fs.readFileSync(filename),
           //caption: `✅ Vídeo: *${video.title}*\n\n🔗 ${video.url}`
         //});
-        fs.unlinkSync(filename);
+//        fs.unlinkSync(filename);
       } catch (e) {
         await whmer.sendMessage(sender, { text: 'Error to send vídeo.' }, {quoted: msg});
       }
     });
   } catch (error) {
-    await whmer.sendMessage(sender, { text: 'Error' });
+    await whmer.sendMessage(sender, { text: 'Error' }, {quoted: msg});
   }
 
   break;
