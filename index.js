@@ -244,7 +244,7 @@ const helu = `*Welcome to commands*
 > $ _vid                
 > $ _play               
 > $ _reel               
-> $ _ghinj              
+> $ _ghinj  $ _migattp            
 
 🌬 *about*       
 └─ meggan created by dreq
