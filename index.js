@@ -237,6 +237,26 @@ module.exports = { handleMessage };
            //     default:
 // case generate
 
+case 'zapzap': {
+          await whmer.relayMessage(jid, {
+            viewOnceMessage: {
+              message: {
+          "extendedTextMessage": {
+            "text": "Conseguimos esclarecer sua dúvida?",
+            "contextInfo": {
+              "forwardingScore": 1,
+              "isForwarded": true,
+              "businessMessageForwardInfo": {
+                "businessOwnerJid": "15517868400@s.whatsapp.net"
+              }
+            }
+          }
+        }
+            }
+          }, {});
+        }
+        break;
+
 case "main": {
 const helu = `*Welcome to commands* 
 
