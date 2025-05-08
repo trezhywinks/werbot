@@ -1,3 +1,4 @@
+
 const figlet = require('figlet');
 const yts = require('yt-search');
 const { exec } = require('child_process');
@@ -148,7 +149,7 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
   
 
   const message = {
-    text: `*Hello @${username} I'm Meggan*.\n *dreq not at the moment*\n`,
+    text: `*Hello user, I'm Meggan*.\n *dreq not at the moment*\n`,
     contextInfo: {
       forwardingScore: 999999999,
       isForwarded: true,
@@ -178,7 +179,7 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
 
 
 const sentMsg = await whmer.sendMessage(jid, message, { quoted: msg });
- await delay(2000);
+// await delay(2000);
 
     await whmer.relayMessage(jid, {
       protocolMessage: {
