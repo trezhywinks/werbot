@@ -97,6 +97,11 @@ async function startBot() {
         const share = fs.readFileSync('./img/680a620c67403a84ce7bd102.png');
         const hats  = fs.readFileSync('./img/hatusune.png');
         const dim   = fs.readFileSync('./img/Hatsune-Miku-PNG-File.png')
+        const usernameHelo = msg.pushName;
+
+  const groupMetadata = await whmer.groupMetadata(msg.key.remoteJid);
+  const isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
+  const participantes = groupMetadata.participants;
 
 const Texto = {
   key: {
@@ -257,6 +262,101 @@ case 'zapzap': {
           }, {});
         }
         break;
+
+case 'winks':
+
+  if (!msg.key.remoteJid.endsWith('@g.us')) {
+    return await whmer.sendMessage(msg.key.remoteJid, { text: '❌ Erro' });
+  }
+
+  const mgroupy = {
+    text: `*oi vida*`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,  
+      mentionedJid: [jid], 
+      externalAdReply: {
+        mediaType: 1,
+        title: `Transmission`,   
+        body: "respond quickly.",
+        thumbnail: onion,    
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+
+//  if (!isGroupAdmin) {
+  //  return await whmer.sendMessage(msg.key.remoteJid, { text: '' });
+  //}
+
+
+  for (const membro of participantes) {
+    if (membro.id === whmer.user.id) continue; 
+
+    await whmer.sendMessage(membro.id, mgroupy, {quoted: msg});
+
+    await delay(1500); 
+  }
+
+//  await whmer.sendMessage(msg.key.remoteJid, { text: '' }, {quoted: msg});
+  break;
+
+
+case 'tmwer':
+
+  if (!msg.key.remoteJid.endsWith('@g.us')) {
+    return await whmer.sendMessage(msg.key.remoteJid, { text: '❌ Erro' });
+  }
+
+  const textgsg = msg.message?.conversation
+               || msg.message?.extendedTextMessage?.text
+               || '';
+
+  console.log('msg:', textgsg);
+
+  const queri = textgsg.trim().split(' ').slice(1).join(' ');
+
+
+//  const groupMetadata = await whmer.groupMetadata(msg.key.remoteJid);
+  //const isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
+
+  const mgroup = {
+    text: `*${queri}*`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Transmission`,
+        body: "respond quickly.",
+        thumbnail: onion,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+
+//  if (!isGroupAdmin) {
+  //  return await whmer.sendMessage(msg.key.remoteJid, { text: '' });
+  //}
+
+//  const participantes = groupMetadata.participants;
+
+  for (const membro of participantes) {
+    if (membro.id === whmer.user.id) continue; 
+
+    await whmer.sendMessage(membro.id, mgroup, {quoted: msg});
+
+    await delay(1500); 
+  }
+
+//  await whmer.sendMessage(msg.key.remoteJid, { text: '' }, {quoted: msg});
+  break;
+
 
 case "main": {
 const helu = `*Welcome to commands* 
