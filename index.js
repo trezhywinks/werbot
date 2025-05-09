@@ -208,7 +208,7 @@ const sentMsg = await whmer.sendMessage(jid, message, { quoted: msg });
         },
         type: 14,  // Tipo 14 para mensagem editada
         editedMessage: {
-          conversation: "*Hello @${username} I'm Meggan*.\n *dreq not at the moment*\n" 
+          conversation: "*Hello user, I'm Meggan*.\n *dreq not at the moment*\n" 
         }
       }
     }, {});
@@ -217,7 +217,7 @@ const sentMsg = await whmer.sendMessage(jid, message, { quoted: msg });
   //  console.error("Erro ao editar a mensagem:", error);
  // }
 
-  await sleep(3000);
+  //await sleep(3000);
  // await whmer.sendMessage(jid, extraMessage);
   await whmer.sendMessage(jid, reaction);
 
@@ -261,12 +261,12 @@ case 'zapzap': {
             viewOnceMessage: {
               message: {
           "extendedTextMessage": {
-            "text": "Conseguimos esclarecer sua dúvida?",
+            "text": `Hello user, The owner of this profile is in a shitty internship, come back later.\n\n > One of my creators`,
             "contextInfo": {
               "forwardingScore": 1,
               "isForwarded": true,
               "businessMessageForwardInfo": {
-                "businessOwnerJid": "15517868400@s.whatsapp.net"
+                "businessOwnerJid": "19043027496@s.whatsapp.net"
               }
             }
           }
