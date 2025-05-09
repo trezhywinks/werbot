@@ -99,9 +99,22 @@ async function startBot() {
         const dim   = fs.readFileSync('./img/Hatsune-Miku-PNG-File.png')
         const usernameHelo = msg.pushName;
 
-  const groupMetadata = await whmer.groupMetadata(msg.key.remoteJid);
-  const isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
-  const participantes = groupMetadata.participants;
+let groupMetadata, isGroupAdmin, participantes;
+
+if (msg.key.remoteJid.endsWith('@g.us')) {
+  try {
+    groupMetadata = await whmer.groupMetadata(msg.key.remoteJid);
+    isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
+    participantes = groupMetadata.participants;
+  } catch (err) {
+    console.error('Erro ao obter metadata do grupo:', err);
+  }
+}
+
+
+//  const groupMetadata = await whmer.groupMetadata(msg.key.remoteJid);
+ // const isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
+  //const participantes = groupMetadata.participants;
 
 const Texto = {
   key: {
