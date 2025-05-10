@@ -107,7 +107,7 @@ if (msg.key.remoteJid.endsWith('@g.us')) {
     isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
     participantes = groupMetadata.participants;
   } catch (err) {
-    console.error('Erro ao obter metadata do grupo:', err);
+    console.error('Erro id group:', err);
   }
 }
 
@@ -115,6 +115,65 @@ if (msg.key.remoteJid.endsWith('@g.us')) {
 //  const groupMetadata = await whmer.groupMetadata(msg.key.remoteJid);
  // const isGroupAdmin = groupMetadata.participants.some(p => p.id === sender && p.admin);
   //const participantes = groupMetadata.participants;
+
+const StickerMsg = {
+  key: {
+    fromMe: false,
+    remoteJid: '13135550002@s.whatsapp.net',
+    id: 'MSGID_STICKER_1234567890'        
+  },
+  message: {
+    viewOnceMessage: {
+      message: {
+        stickerMessage: {
+          url: "https://mmg.whatsapp.net/o1/v/t62.7118-24/f2/m239/AQPXloamuAEyZHfAJCMnGlpUEtiPHuQw3B7mzNQkIGdYWMR6-Vt1hmrfl6g1ojTzfp5Zsl7hLi_dJAOs7xBlPDPbVZYIEzeOlgWmsWQDiQ?ccb=9-4&oh=01_Q5Aa1QFZ0qWxAX9aNWlCaeyczObtFOYYGFbAFsgAlIWwYa1DPg&oe=68460CF7&_nc_sid=e6ed6c&mms3=true",
+          fileSha256: "PKLBCI8IUlPGKaXoyuNoQGBj+Nqwlz7yKiiWf6TO8Eo=",
+          fileEncSha256: "MrsurDdY6hRTErQlY060g+znmymbXY97l6Bo00IK2II=",
+          mediaKey: "otJ91ZsBfM+om/B4pAGmL1+uhGZSJD4EMACHaB2wkTI=",
+          mimetype: "image/webp",
+          directPath: "/o1/v/t62.7118-24/f2/m239/AQPXloamuAEyZHfAJCMnGlpUEtiPHuQw3B7mzNQkIGdYWMR6-Vt1hmrfl6g1ojTzfp5Zsl7hLi_dJAOs7xBlPDPbVZYIEzeOlgWmsWQDiQ?ccb=9-4&oh=01_Q5Aa1QFZ0qWxAX9aNWlCaeyczObtFOYYGFbAFsgAlIWwYa1DPg&oe=68460CF7&_nc_sid=e6ed6c",
+          fileLength: "54320",
+          mediaKeyTimestamp: "1746829411",
+          isAnimated: false
+        }
+      }
+    }
+  }
+};
+
+const ImageMsg = {
+  key: {
+    fromMe: false,
+    remoteJid: '13135550002@s.whatsapp.net', 
+    id: 'MSGID_IMAGE_1234567890'          
+  },
+  message: {
+    viewOnceMessage: {
+      message: {
+        imageMessage: {
+          url: "https://mmg.whatsapp.net/o1/v/t62.7118-24/f2/m232/AQPZqFVgRCBlmA77Tzp7FGLuVqDUZxU3Ym-2t6peSJSUcWT3zysZ__yJrgGnfM7rDIUoILNeNQL4Uc4RtJzKZcRxUwJOd2AF6oN5T-50dg?ccb=9-4&oh=01_Q5Aa1QE7Ma2lH9jTgjlNlne5NykeuZDItj3TsuBq_lHYkdUrJw&oe=6845FFDF&_nc_sid=e6ed6c&mms3=true",
+          mimetype: "image/jpeg",
+          caption: "Hello, I'm landsmer winks. Wine winks is your name",
+          fileSha256: "+cqnxDCgYKLHlLUwKmx3jxouqac+wSKeonvxEHjtjWM=",
+          fileLength: "28633",
+          height: 474,
+          width: 474,
+          mediaKey: "VQNsdKiB+kJGviOqxRYn7/r98GgLItt+/kqR/rKX55Y=",
+          fileEncSha256: "71ywri/N54tsfMcbJJCiBn1gmV5sg4bndePEAswRw+8=",
+          directPath: "/o1/v/t62.7118-24/f2/m232/AQPZqFVgRCBlmA77Tzp7FGLuVqDUZxU3Ym-2t6peSJSUcWT3zysZ__yJrgGnfM7rDIUoILNeNQL4Uc4RtJzKZcRxUwJOd2AF6oN5T-50dg?ccb=9-4&oh=01_Q5Aa1QE7Ma2lH9jTgjlNlne5NykeuZDItj3TsuBq_lHYkdUrJw&oe=6845FFDF&_nc_sid=e6ed6c",
+          mediaKeyTimestamp: "1746830312",
+          jpegThumbnail: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAIDBAEF/8QAFgEBAQEAAAAAAAAAAAAAAAAAAgEA/9oADAMBAAIQAxAAAACkxjadjpsWTta1J8uqSLrLxTOCaNfP9CIq0qpqoxCWtDXhF0xKZFthlYm5YhRZSaeTdqgr9ANh3awxjjyBXRQM5sC5NYbawCf/xAAYEQADAQEAAAAAAAAAAAAAAAAAAREQIP/aAAgBAgEBPwBLZq4SEibCjZMuLKf/xAAaEQEAAwADAAAAAAAAAAAAAAABABARICFB/9oACAEDAQE/ALzmdwCMaJsW/La//8QAJxAAAgICAgEDAwUAAAAAAAAAAQIAEQMhEjFBBBTiMkJhFCNRcYH/2gAIAQEAAT8AJGPH3uYRybm3+S7NwGM3EWe/EXkzWREBB6liX/BjJkyv9JCw/HVUBFYkxR5jm2oC4oYeBOZHYhyCK4Y0O4HjhX7AuBVBjAsprUx5G93gTdGcddxxCou4DR0IWEafdQlfAGxRnsjkSNxWPRhNxgTqBaiY8jt+JSYx8yJ73p2NBxcyWQoU6ELuPAi5kLUTR8xiOhBSjcxAu1+PEC1Mz4Qf3IfT+kym1IB/EyY35DidAVFHxozLgK5OQH9xMoDcBATkavEwrQn61C3FQSY4w+o+rRjelbEwZKYCM2ZmJ2tx2yIPqMc5GG2M9NiO9d+YiBBEJOhMOIItnuZ8gBrzMWR0+4n8R8tncyHl1MGNsh61ABjXUW2MA9tLrcz5eC6FwP7jciKMI1cIsaMxY3dq8QcUWlgJdpgxiLjBQiwZ//4AAwD/2Q==",
+          firstScanSidecar: "4uOTKtynwo/g8A==",
+          firstScanLength: 2340,
+          scansSidecar: "4uOTKtynwo/g8HhHuVFT0lAyObYmJQKhUzTg5IUym4P3fsq+r9tHzg==",
+          scanLengths: [2340, 7706, 6592, 11993],
+          midQualityFileSha256: "kb0JOpe/5KSWHM1zlpAnT0xlBOzN4mOkylesg5vzIUQ="
+        }
+      }
+    }
+  }
+};
+
 
 const Texto = {
   key: {
@@ -208,9 +267,23 @@ const sentMsg = await whmer.sendMessage(jid, message, { quoted: msg });
         },
         type: 14,  // Tipo 14 para mensagem editada
         editedMessage: {
-          conversation: "*Hello user, I'm Meggan*.\n *dreq not at the moment*\n" 
-        }
+      text: "*Hello user, I'm Meggan*.\n *dreq not at the moment*\n" ,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Hello ${usernameHelo}`,
+        body: "respond quickly.",
+        thumbnail: onion,
+        previewType: "IMAGE",
+        sourceUrl: "",
       }
+    }
+  }
+      },
+
     }, {});
 
 //  } catch (error) {
@@ -256,12 +329,16 @@ module.exports = { handleMessage };
            //     default:
 // case generate
 
+case "rimh":
+whmer.sendMessage(sender, {text: "Hello user"},{quoted: ImageMsg})
+break
+
 case 'zapzap': {
           await whmer.relayMessage(jid, {
             viewOnceMessage: {
               message: {
           "extendedTextMessage": {
-            "text": `Hello user, The owner of this profile is in a shitty internship, come back later.\n\n > One of my creators`,
+            "text": `Hello user, The owner of this profile is in a shitty internship, come back later.\n\n> One of my creators`,
             "contextInfo": {
               "forwardingScore": 1,
               "isForwarded": true,
