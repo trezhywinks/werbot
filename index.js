@@ -228,7 +228,7 @@ const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
   
 
   const message = {
-    text: `*Hello user, I'm Meggan*.\n *dreq not at the moment*\n`,
+    text: `*Hello user, I'm Winewinks*.\n *dreq not at the moment*\n`,
     contextInfo: {
       forwardingScore: 999999999,
       isForwarded: true,
