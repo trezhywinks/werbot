@@ -96,6 +96,7 @@ async function startBot() {
         const onion = fs.readFileSync('./img/67f09e72e9e238549038dbd9.png');
         const share = fs.readFileSync('./img/680a620c67403a84ce7bd102.png');
         const hats  = fs.readFileSync('./img/hatusune.png');
+        const which = fs.readFileSync('./img/which-character-do-you-think-is-the-cutest-v0-p9lt0k75q5me1.webp');
         const dim   = fs.readFileSync('./img/Hatsune-Miku-PNG-File.png')
         const usernameHelo = msg.pushName;
 
@@ -184,7 +185,7 @@ const Texto = {
     id: 'MSGID1234567890'
   },
   message: {
-    conversation: '💬 *test*'
+    conversation: '💬 *Command not found*'
   }
 };
 
@@ -449,6 +450,27 @@ case 'tmwer':
 //  await whmer.sendMessage(msg.key.remoteJid, { text: '' }, {quoted: msg});
   break;
 
+case "vela":
+  const vilas = {
+    text: `not! why not!`,
+    contextInfo: {
+      forwardingScore: 999999999,
+      isForwarded: true,
+      mentionedJid: [jid],
+      externalAdReply: {
+        mediaType: 1,
+        title: `Not?`,
+        body: "try again...",
+        thumbnail: which,
+        previewType: "IMAGE",
+        sourceUrl: "",
+      }
+    }
+  };
+
+whmer.sendMessage(sender, {sticker: which}, {quoted: Texto});
+
+break
 
 case "main": {
 const helu = `*Welcome to commands* 
